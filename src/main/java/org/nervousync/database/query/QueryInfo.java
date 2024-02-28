@@ -1,843 +1,425 @@
 /*
- * Copyright © 2003 Nervousync® Studio, Inc. All rights reserved.
- * This software is the confidential and proprietary information of
- * Nervousync Studio, Inc. You shall not disclose such Confidential
- * Information and shall use it only in accordance with the terms of the
- * license agreement you entered into with Nervousync Studio.
+ * Licensed to the Nervousync Studio (NSYC) under one or more
+ * contributor license agreements. See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package org.nervousync.database.query;
 
-import org.nervousync.commons.core.Globals;
-import org.nervousync.database.commons.DatabaseCommons;
-import org.nervousync.database.enumerations.join.JoinType;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.nervousync.beans.core.BeanObject;
+import org.nervousync.beans.transfer.basic.ClassAdapter;
+import org.nervousync.commons.Globals;
 import org.nervousync.database.enumerations.lock.LockOption;
-import org.nervousync.database.exceptions.entity.EntityStatusException;
-import org.nervousync.database.exceptions.record.QueryException;
-import org.nervousync.database.query.condition.MatchCondition;
-import org.nervousync.database.query.condition.QueryCondition;
-import org.nervousync.database.query.core.QueryItem;
-import org.nervousync.database.query.core.QueryTable;
-import org.nervousync.database.query.group.GroupByColumn;
-import org.nervousync.database.query.operate.ConditionCode;
-import org.nervousync.database.query.operate.ConnectionCode;
-import org.nervousync.database.query.orderby.OrderByColumn;
-import org.nervousync.utils.ConvertUtils;
-import org.nervousync.utils.SecurityUtils;
+import org.nervousync.database.query.condition.Condition;
+import org.nervousync.database.query.condition.impl.ColumnCondition;
+import org.nervousync.database.query.condition.impl.GroupCondition;
+import org.nervousync.database.query.core.AbstractItem;
+import org.nervousync.database.query.core.SortedItem;
+import org.nervousync.database.query.filter.GroupBy;
+import org.nervousync.database.query.filter.OrderBy;
+import org.nervousync.database.query.item.ColumnItem;
+import org.nervousync.database.query.item.FunctionItem;
+import org.nervousync.database.query.item.QueryItem;
+import org.nervousync.database.query.join.QueryJoin;
 
-import java.util.*;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * The type Query info.
+ * <h2 class="en-US">Query information define</h2>
+ * <h2 class="zh-CN">查询信息定义</h2>
  *
  * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
- * @version $Revision : 1.0 $ $Date: 10/28/2020 11:46 $
+ * @version $Revision: 1.0.0 $ $Date: Oct 28, 2020 11:46:08 $
  */
-public final class QueryInfo {
+@XmlType(name = "query_info", namespace = "https://nervousync.org/schemas/query")
+@XmlRootElement(name = "query_info", namespace = "https://nervousync.org/schemas/query")
+@XmlAccessorType(XmlAccessType.NONE)
+public final class QueryInfo extends BeanObject {
+
+    /**
+     * <span class="en-US">Serial version UID</span>
+     * <span class="zh-CN">序列化UID</span>
+     */
+	@Serial
+	private static final long serialVersionUID = 549973159743148887L;
 
 	/**
-	 * The Query table.
+	 * <span class="en-US">Query name</span>
+	 * <span class="zh-CN">查询名称</span>
 	 */
-	private final QueryTable queryTable;
+	@XmlElement(name = "identify_name")
+	private String identifyName = Globals.DEFAULT_VALUE_STRING;
 	/**
-	 * Query order by cause
+	 * <span class="en-US">Query driven table entity class</span>
+	 * <span class="zh-CN">查询驱动表实体类</span>
 	 */
-	private final List<OrderByColumn> orderByColumns;
+	@XmlElement(name = "main_entity")
+	@XmlJavaTypeAdapter(ClassAdapter.class)
+	private Class<?> mainEntity;
 	/**
-	 * Query order by cause
+	 * <span class="en-US">Related query information list</span>
+	 * <span class="zh-CN">关联查询信息列表</span>
 	 */
-	private final List<GroupByColumn> groupByColumns;
+	@XmlElement(name = "query_join", namespace = "https://nervousync.org/schemas/query")
+	@XmlElementWrapper(name = "join_list")
+	private List<QueryJoin> queryJoins;
 	/**
-	 * Number of records to include in result set
+	 * <span class="en-US">Query item instance list</span>
+	 * <span class="zh-CN">查询项目实例对象列表</span>
 	 */
-	private final int pageLimit;
+	@XmlElements({
+			@XmlElement(name = "column_item", type = ColumnItem.class, namespace = "https://nervousync.org/schemas/query"),
+			@XmlElement(name = "function_item", type = FunctionItem.class, namespace = "https://nervousync.org/schemas/query"),
+			@XmlElement(name = "query_item", type = QueryItem.class, namespace = "https://nervousync.org/schemas/query")
+	})
+	@XmlElementWrapper(name = "item_list")
+	private List<AbstractItem> itemList;
 	/**
-	 * Value to start counting records from
+	 * <span class="en-US">Query condition instance list</span>
+	 * <span class="zh-CN">查询条件实例对象列表</span>
 	 */
-	private final int offset;
+	@XmlElements({
+			@XmlElement(name = "column_condition", type = ColumnCondition.class, namespace = "https://nervousync.org/schemas/query"),
+			@XmlElement(name = "group_condition", type = GroupCondition.class, namespace = "https://nervousync.org/schemas/query")
+	})
+	@XmlElementWrapper(name = "condition_list")
+	private List<Condition> conditionList;
 	/**
-	 * Value for cacheables status
+	 * <span class="en-US">Query order by columns list</span>
+	 * <span class="zh-CN">查询排序数据列列表</span>
 	 */
-	private final boolean cacheables;
+	@XmlElement(name = "order_by")
+	@XmlElementWrapper(name = "order_list")
+	private List<OrderBy> orderByList;
 	/**
-	 * Value for update status
+	 * <span class="en-US">Query group by columns list</span>
+	 * <span class="zh-CN">查询分组数据列列表</span>
 	 */
-	private final boolean forUpdate;
+	@XmlElement(name = "group_by")
+	@XmlElementWrapper(name = "group_list")
+	private List<GroupBy> groupByList;
 	/**
-	 * Lock option configure
+	 * <span class="en-US">Query result can cacheable</span>
+	 * <span class="zh-CN">查询结果可以缓存</span>
 	 */
-	private final LockOption lockOption;
+	@XmlElement
+	private boolean cacheables = Boolean.FALSE;
 	/**
-	 * Query was analyzed
+	 * <span class="en-US">Query result for update</span>
+	 * <span class="zh-CN">查询结果用于批量更新记录</span>
 	 */
-	private final boolean analyzed;
+	@XmlElement(name = "for_update")
+	private boolean forUpdate = Boolean.FALSE;
+	/**
+	 * <span class="en-US">Query record lock option</span>
+	 * <span class="zh-CN">查询记录锁定选项</span>
+	 */
+	@XmlElement(name = "lock_option")
+	private LockOption lockOption = LockOption.NONE;
+    /**
+     * <span class="en-US">Current page number</span>
+     * <span class="zh-CN">当前页数</span>
+     */
+	@XmlElement(name = "page_number")
+    private int pageNo;
+    /**
+     * <span class="en-US">Page limit records count</span>
+     * <span class="zh-CN">每页的记录数</span>
+     */
+	@XmlElement(name = "page_limit")
+    private int pageLimit;
 
 	/**
-	 * Instantiates a new Query info.
-	 *
-	 * @param queryTable     the query table
-	 * @param orderByColumns the order by columns
-	 * @param groupByColumns the group by columns
-	 * @param pageLimit      the limit size
-	 * @param offset         the offset
-	 * @param cacheables     the cacheables
-	 * @param forUpdate      the for update
-	 * @param lockOption     the lock option
-	 * @param analyzed       the analyzed
+	 * <h3 class="en-US">Constructor method for query information define</h3>
+	 * <h3 class="zh-CN">查询条件信息的构造方法</h3>
 	 */
-	private QueryInfo(final QueryTable queryTable, final List<OrderByColumn> orderByColumns,
-	                  final List<GroupByColumn> groupByColumns, final int pageLimit, final int offset,
-	                  final boolean cacheables, final boolean forUpdate, final LockOption lockOption,
-	                  final boolean analyzed) {
-		this.queryTable = queryTable;
-		this.orderByColumns = orderByColumns;
-		this.groupByColumns = groupByColumns;
-		this.pageLimit = pageLimit;
-		this.offset = offset;
-		this.cacheables = cacheables;
-		this.forUpdate = forUpdate;
-		this.lockOption = lockOption;
-		this.analyzed = analyzed;
+	public QueryInfo() {
+		this.queryJoins = new ArrayList<>();
+		this.itemList = new ArrayList<>();
+		this.conditionList = new ArrayList<>();
 	}
 
 	/**
-	 * Gets query table.
+	 * <h3 class="en-US">Getter method for query name</h3>
+	 * <h3 class="zh-CN">查询名称的Getter方法</h3>
 	 *
-	 * @return the query table
+	 * @return <span class="en-US">Query name</span>
+	 * <span class="zh-CN">查询名称</span>
 	 */
-	public QueryTable getQueryTable() {
-		return queryTable;
+	public String getIdentifyName() {
+		return identifyName;
 	}
 
 	/**
-	 * Gets order by columns.
+	 * <h3 class="en-US">Setter method for query name</h3>
+	 * <h3 class="zh-CN">查询名称的Setter方法</h3>
 	 *
-	 * @return the order by columns
+	 * @param identifyName <span class="en-US">Query name</span>
+	 *                     <span class="zh-CN">查询名称</span>
 	 */
-	public List<OrderByColumn> getOrderByColumns() {
-		return orderByColumns;
+	public void setIdentifyName(String identifyName) {
+		this.identifyName = identifyName;
 	}
 
 	/**
-	 * Gets group by columns.
+	 * <h3 class="en-US">Getter method for query driven table entity class</h3>
+	 * <h3 class="zh-CN">查询驱动表实体类的Getter方法</h3>
 	 *
-	 * @return the group by columns
+	 * @return <span class="en-US">Query driven table entity class</span>
+	 * <span class="zh-CN">查询驱动表实体类</span>
 	 */
-	public List<GroupByColumn> getGroupByColumns() {
-		return groupByColumns;
+	public Class<?> getMainEntity() {
+		return mainEntity;
 	}
 
 	/**
-	 * Gets page limit.
+	 * <h3 class="en-US">Setter method for query driven table entity class</h3>
+	 * <h3 class="zh-CN">查询驱动表实体类的Setter方法</h3>
 	 *
-	 * @return the page limit
+	 * @param mainEntity <span class="en-US">Query driven table entity class</span>
+	 *                   <span class="zh-CN">查询驱动表实体类</span>
 	 */
-	public int getPageLimit() {
-		return pageLimit;
+	public void setMainEntity(Class<?> mainEntity) {
+		this.mainEntity = mainEntity;
 	}
 
 	/**
-	 * Gets offset.
+	 * <h3 class="en-US">Getter method for related query information list</h3>
+	 * <h3 class="zh-CN">关联查询信息列表的Getter方法</h3>
 	 *
-	 * @return the offset
+	 * @return <span class="en-US">Related query information list</span>
+	 * <span class="zh-CN">关联查询信息列表</span>
 	 */
-	public int getOffset() {
-		return offset;
+	public List<QueryJoin> getQueryJoins() {
+		return queryJoins;
 	}
 
 	/**
-	 * Is cacheables boolean.
+	 * <h3 class="en-US">Setter method for related query information list</h3>
+	 * <h3 class="zh-CN">关联查询信息列表的Setter方法</h3>
 	 *
-	 * @return the boolean
+	 * @param queryJoins <span class="en-US">Related query information list</span>
+	 *                   <span class="zh-CN">关联查询信息列表</span>
+	 */
+	public void setQueryJoins(List<QueryJoin> queryJoins) {
+		this.queryJoins = queryJoins;
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query item instance list</h3>
+	 * <h3 class="zh-CN">查询项目实例对象列表的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query item instance list</span>
+	 * <span class="zh-CN">查询项目实例对象列表</span>
+	 */
+	public List<AbstractItem> getItemList() {
+		return itemList;
+	}
+
+	/**
+	 * <h3 class="en-US">Setter method for query item instance list</h3>
+	 * <h3 class="zh-CN">查询项目实例对象列表的Setter方法</h3>
+	 *
+	 * @param itemList <span class="en-US">Query item instance list</span>
+	 *                 <span class="zh-CN">查询项目实例对象列表</span>
+	 */
+	public void setItemList(List<AbstractItem> itemList) {
+		this.itemList = itemList;
+		this.itemList.sort(SortedItem.desc());
+
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query condition instance list</h3>
+	 * <h3 class="zh-CN">查询条件实例对象列表的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query condition instance list</span>
+	 * <span class="zh-CN">查询条件实例对象列表</span>
+	 */
+	public List<Condition> getConditionList() {
+		return conditionList;
+	}
+
+	/**
+	 * <h3 class="en-US">Setter method for query condition instance list</h3>
+	 * <h3 class="zh-CN">查询条件实例对象列表的Setter方法</h3>
+	 *
+	 * @param conditionList <span class="en-US">Query condition instance list</span>
+	 *                      <span class="zh-CN">查询条件实例对象列表</span>
+	 */
+	public void setConditionList(List<Condition> conditionList) {
+		this.conditionList = conditionList;
+		this.conditionList.sort(SortedItem.desc());
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query order by columns list</h3>
+	 * <h3 class="zh-CN">查询排序数据列列表的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query order by columns list</span>
+	 * <span class="zh-CN">查询排序数据列列表</span>
+	 */
+	public List<OrderBy> getOrderByList() {
+		return orderByList;
+	}
+
+	/**
+	 * <h3 class="en-US">Setter method for query order by columns list</h3>
+	 * <h3 class="zh-CN">查询排序数据列列表的Setter方法</h3>
+	 *
+	 * @param orderByList <span class="en-US">Query order by columns list</span>
+	 *                    <span class="zh-CN">查询排序数据列列表</span>
+	 */
+	public void setOrderByList(List<OrderBy> orderByList) {
+		this.orderByList = orderByList;
+		this.orderByList.sort(SortedItem.desc());
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query group by columns list</h3>
+	 * <h3 class="zh-CN">查询分组数据列列表的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query group by columns list</span>
+	 * <span class="zh-CN">查询分组数据列列表</span>
+	 */
+	public List<GroupBy> getGroupByList() {
+		return groupByList;
+	}
+
+	/**
+	 * <h3 class="en-US">Setter method for query group by columns list</h3>
+	 * <h3 class="zh-CN">查询分组数据列列表的Setter方法</h3>
+	 *
+	 * @param groupByList <span class="en-US">Query group by columns list</span>
+	 *                    <span class="zh-CN">查询分组数据列列表</span>
+	 */
+	public void setGroupByList(List<GroupBy> groupByList) {
+		this.groupByList = groupByList;
+		this.groupByList.sort(SortedItem.desc());
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query result can cacheable</h3>
+	 * <h3 class="zh-CN">查询结果可以缓存的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query result can cacheable</span>
+	 * <span class="zh-CN">查询结果可以缓存</span>
 	 */
 	public boolean isCacheables() {
 		return cacheables;
 	}
 
 	/**
-	 * Is for update boolean.
+	 * <h3 class="en-US">Setter method for query result can cacheable</h3>
+	 * <h3 class="zh-CN">查询结果可以缓存的Setter方法</h3>
 	 *
-	 * @return the boolean
+	 * @param cacheables <span class="en-US">Query result can cacheable</span>
+	 *                   <span class="zh-CN">查询结果可以缓存</span>
+	 */
+	public void setCacheables(boolean cacheables) {
+		this.cacheables = cacheables;
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query result for update</h3>
+	 * <h3 class="zh-CN">查询结果用于批量更新记录的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query result for update</span>
+	 * <span class="zh-CN">查询结果用于批量更新记录</span>
 	 */
 	public boolean isForUpdate() {
 		return forUpdate;
 	}
 
 	/**
-	 * Gets lock option.
+	 * <h3 class="en-US">Setter method for query result for update</h3>
+	 * <h3 class="zh-CN">查询结果用于批量更新记录的Setter方法</h3>
 	 *
-	 * @return the lock option
+	 * @param forUpdate <span class="en-US">Query result for update</span>
+	 *                  <span class="zh-CN">查询结果用于批量更新记录</span>
+	 */
+	public void setForUpdate(boolean forUpdate) {
+		this.forUpdate = forUpdate;
+	}
+
+	/**
+	 * <h3 class="en-US">Getter method for query record lock option</h3>
+	 * <h3 class="zh-CN">查询记录锁定选项的Getter方法</h3>
+	 *
+	 * @return <span class="en-US">Query record lock option</span>
+	 * <span class="zh-CN">查询记录锁定选项</span>
 	 */
 	public LockOption getLockOption() {
 		return lockOption;
 	}
 
 	/**
-	 * Is analyzed boolean.
+	 * <h3 class="en-US">Setter method for query record lock option</h3>
+	 * <h3 class="zh-CN">查询记录锁定选项的Setter方法</h3>
 	 *
-	 * @return the boolean
+	 * @param lockOption <span class="en-US">Query record lock option</span>
+	 *                   <span class="zh-CN">查询记录锁定选项</span>
 	 */
-	public boolean isAnalyzed() {
-		return analyzed;
+	public void setLockOption(LockOption lockOption) {
+		this.lockOption = lockOption;
 	}
 
-	/**
-	 * Pager query boolean.
-	 *
-	 * @return boolean
-	 */
-	public boolean pagerQuery() {
-		return this.offset != Globals.DEFAULT_VALUE_INT && this.pageLimit != Globals.DEFAULT_VALUE_INT;
-	}
+    /**
+     * <h3 class="en-US">Getter method for current page number</h3>
+     * <h3 class="zh-CN">当前页数的Getter方法</h3>
+     *
+     * @return <span class="en-US">Current page number</span>
+     * <span class="zh-CN">当前页数</span>
+     */
+    public int getPageNo() {
+        return pageNo;
+    }
 
-	/**
-	 * Cache key string.
-	 *
-	 * @return the string
-	 */
-	public String cacheKey() {
-		if (this.forUpdate || !this.cacheables) {
-			return Globals.DEFAULT_VALUE_STRING;
-		}
+    /**
+     * <h3 class="en-US">Setter method for current page number</h3>
+     * <h3 class="zh-CN">当前页数的Setter方法</h3>
+     *
+     * @param pageNo <span class="en-US">Current page number</span>
+     *               <span class="zh-CN">当前页数</span>
+     */
+    public void setPageNo(int pageNo) {
+        this.pageNo = pageNo;
+    }
 
-		SortedMap<String, Object> queryMap = new TreeMap<>();
+    /**
+     * <h3 class="en-US">Getter method for query page limit</h3>
+     * <h3 class="zh-CN">查询分页记录数的Getter方法</h3>
+     *
+     * @return <span class="en-US">Query page limit</span>
+     * <span class="zh-CN">查询分页记录数</span>
+     */
+    public int getPageLimit() {
+        return pageLimit;
+    }
 
-		queryMap.put("QueryTable", this.queryTable.cacheKey());
-
-		Map<String, String> orderByMap = new HashMap<>();
-		this.orderByColumns.forEach(orderByColumn ->
-				orderByMap.put(orderByColumn.cacheKey(), orderByColumn.orderByType().toString()));
-		queryMap.put("OrderBy", orderByMap);
-
-		Map<Class<?>, String> groupByMap = new HashMap<>();
-		this.groupByColumns.forEach(groupByColumn ->
-				groupByMap.put(groupByColumn.entityClass(), groupByColumn.identifyKey()));
-		queryMap.put("GroupBy", groupByMap);
-
-		queryMap.put("PageLimit", this.pageLimit);
-		queryMap.put("Offset", this.offset);
-
-		return ConvertUtils.byteToHex(SecurityUtils.SHA256(queryMap));
-	}
-
-	/**
-	 * New builder builder.
-	 *
-	 * @param entityClass the entity class
-	 * @return the builder
-	 */
-	public static Builder newBuilder(final Class<?> entityClass) {
-		return new Builder(Globals.DEFAULT_VALUE_STRING, entityClass, Boolean.FALSE);
-	}
-
-	/**
-	 * New builder builder.
-	 *
-	 * @param aliasName   the alias name
-	 * @param entityClass the entity class
-	 * @return the builder
-	 */
-	public static Builder newBuilder(final String aliasName, final Class<?> entityClass) {
-		return new Builder(aliasName, entityClass, Boolean.FALSE);
-	}
-
-	/**
-	 * Analyze builder builder.
-	 *
-	 * @param aliasName   the alias name
-	 * @param entityClass the entity class
-	 * @return the builder
-	 */
-	public static Builder analyzeBuilder(final String aliasName, final Class<?> entityClass) {
-		return new Builder(aliasName, entityClass, Boolean.TRUE);
-	}
-
-	/**
-	 * The type Builder.
-	 */
-	public static final class Builder {
-
-		/**
-		 * The Query builder.
-		 */
-		private final QueryTable.QueryBuilder queryBuilder;
-		/**
-		 * Query order by cause
-		 */
-		private final List<OrderByColumn> orderByColumns;
-		/**
-		 * Query order by cause
-		 */
-		private final List<GroupByColumn> groupByColumns;
-		/**
-		 * Number of records to include in result set
-		 */
-		private int pageLimit = Globals.DEFAULT_VALUE_INT;
-		/**
-		 * Value to start counting records from
-		 */
-		private int offset = Globals.INITIALIZE_INT_VALUE;
-		/**
-		 * Value for cacheables status
-		 */
-		private boolean cacheables = Boolean.FALSE;
-		/**
-		 * Value for update status
-		 */
-		private boolean forUpdate = Boolean.FALSE;
-		/**
-		 * Lock option configure
-		 */
-		private LockOption lockOption = LockOption.NONE;
-		/**
-		 * Build an analysis query
-		 */
-		private final boolean analyzed;
-
-		/**
-		 * Instantiates a new Builder.
-		 *
-		 * @param aliasName   the alias name
-		 * @param entityClass the entity class
-		 * @param analyzed    the analyzed
-		 */
-		private Builder(final String aliasName, final Class<?> entityClass, final boolean analyzed) {
-			this.queryBuilder = QueryTable.newBuilder(aliasName, entityClass, Globals.INITIALIZE_INT_VALUE);
-			this.orderByColumns = new ArrayList<>();
-			this.groupByColumns = new ArrayList<>();
-			this.analyzed = analyzed;
-		}
-
-		/**
-		 * Add join table builder.
-		 *
-		 * @param joinType       the join type
-		 * @param aliasName      the alias name
-		 * @param entityClass    the entity class
-		 * @param referenceClass the reference class
-		 * @throws EntityStatusException the entity status exception
-		 */
-		public void joinTable(final JoinType joinType, final String aliasName, final Class<?> entityClass,
-		                      final Class<?> referenceClass) throws EntityStatusException {
-			if (this.analyzed && !this.queryBuilder.analyzeCheck(entityClass, referenceClass)) {
-				throw new EntityStatusException("Analyze check failed! ");
-			}
-			this.queryBuilder.joinTable(joinType, aliasName, entityClass, referenceClass);
-		}
-
-		/**
-		 * Add query column query builder.
-		 *
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 */
-		public void queryColumn(final Class<?> entityClass, final String identifyKey) {
-			this.queryColumn(entityClass, identifyKey, Boolean.FALSE);
-		}
-
-		/**
-		 * Add query column query builder.
-		 *
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 * @param distinct    the distinct
-		 */
-		public void queryColumn(final Class<?> entityClass, final String identifyKey, final boolean distinct) {
-			this.queryColumn(entityClass, identifyKey, distinct, Globals.DEFAULT_VALUE_STRING);
-		}
-
-		/**
-		 * Add query column query builder.
-		 *
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 * @param distinct    the distinct
-		 * @param aliasName   the alias name
-		 */
-		public void queryColumn(final Class<?> entityClass, final String identifyKey, final boolean distinct,
-		                        final String aliasName) {
-			this.queryBuilder.addQueryColumn(entityClass, identifyKey, distinct, aliasName);
-		}
-
-		/**
-		 * Add query function.
-		 *
-		 * @param entityClass    the entity class
-		 * @param aliasName      the alias name
-		 * @param sqlFunction    SQL function
-		 * @param functionParams Function parameter array
-		 */
-		public void queryFunction(final Class<?> entityClass, final String aliasName, final String sqlFunction,
-		                          final QueryItem... functionParams) {
-			this.queryBuilder.addQueryFunction(entityClass, aliasName, sqlFunction, functionParams);
-		}
-
-		/**
-		 * Add greater condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void greater(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.greater(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add greater condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void greater(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                    final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.GREATER, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add greater equal condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void greaterEqual(final Class<?> entityClass, final String identifyKey,
-		                         final MatchCondition matchCondition) {
-			this.greaterEqual(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add greater equal condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void greaterEqual(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                         final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.GREATER_EQUAL, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add less condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void less(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.less(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add less condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void less(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                 final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.LESS, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add less equal condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void lessEqual(final Class<?> entityClass, final String identifyKey,
-		                      final MatchCondition matchCondition) {
-			this.lessEqual(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add less equal condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void lessEqual(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                      final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.LESS_EQUAL, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add equal condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void equal(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.equal(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add equal condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void equal(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                  final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.EQUAL, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add not equal condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void notEqual(final Class<?> entityClass, final String identifyKey,
-		                     final MatchCondition matchCondition) {
-			this.notEqual(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add not equal condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void notEqual(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                     final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.NOT_EQUAL, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add between and condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void betweenAnd(final Class<?> entityClass, final String identifyKey,
-		                       final MatchCondition matchCondition) {
-			this.betweenAnd(ConnectionCode.AND, identifyKey, entityClass, matchCondition);
-		}
-
-		/**
-		 * Add between and condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param identifyKey    the identify key
-		 * @param entityClass    the entity class
-		 * @param matchCondition the match condition
-		 */
-		public void betweenAnd(final ConnectionCode connCode, final String identifyKey, final Class<?> entityClass,
-		                       final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.BETWEEN_AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add not between and condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void notBetweenAnd(final Class<?> entityClass, final String identifyKey,
-		                          final MatchCondition matchCondition) {
-			this.notBetweenAnd(ConnectionCode.AND, identifyKey, entityClass, matchCondition);
-		}
-
-		/**
-		 * Add not between and condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param identifyKey    the identify key
-		 * @param entityClass    the entity class
-		 * @param matchCondition the match condition
-		 */
-		public void notBetweenAnd(final ConnectionCode connCode, final String identifyKey,
-		                          final Class<?> entityClass, final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.NOT_BETWEEN_AND,
-					entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add like condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void like(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.like(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add like condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void like(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                 final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.LIKE,
-					entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add not like condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void notLike(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.notLike(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add not like condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void notLike(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		                    final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.NOT_LIKE,
-					entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add is null condition query builder.
-		 *
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 */
-		public void isNull(final Class<?> entityClass, final String identifyKey) {
-			this.isNull(ConnectionCode.AND, entityClass, identifyKey);
-		}
-
-		/**
-		 * Add is null condition query builder.
-		 *
-		 * @param connCode    the connection code
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 */
-		public void isNull(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey) {
-			this.add(connCode, ConditionCode.IS_NULL, entityClass, identifyKey, null);
-		}
-
-		/**
-		 * Add not null condition query builder.
-		 *
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 */
-		public void notNull(final Class<?> entityClass, final String identifyKey) {
-			this.notNull(ConnectionCode.AND, entityClass, identifyKey);
-		}
-
-		/**
-		 * Add not null condition query builder.
-		 *
-		 * @param connCode    the connection code
-		 * @param entityClass the entity class
-		 * @param identifyKey the identify key
-		 */
-		public void notNull(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey) {
-			this.add(connCode, ConditionCode.NOT_NULL,
-					entityClass, identifyKey, null);
-		}
-
-		/**
-		 * Add in condition query builder.
-		 *
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void in(final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.in(ConnectionCode.AND, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add in condition query builder.
-		 *
-		 * @param connCode       the connection code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		public void in(final ConnectionCode connCode, final Class<?> entityClass, final String identifyKey,
-		               final MatchCondition matchCondition) {
-			this.add(connCode, ConditionCode.IN, entityClass, identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add group condition query builder.
-		 *
-		 * @param queryConditions the query conditions
-		 */
-		public void group(final QueryCondition... queryConditions) {
-			this.group(ConnectionCode.AND, queryConditions);
-		}
-
-		/**
-		 * Add group condition query builder.
-		 *
-		 * @param connCode        the connection code
-		 * @param queryConditions the query conditions
-		 */
-		public void group(final ConnectionCode connCode, final QueryCondition... queryConditions) {
-			this.add(connCode, ConditionCode.GROUP, null,
-					Globals.DEFAULT_VALUE_STRING, MatchCondition.group(queryConditions));
-		}
-
-		/**
-		 * Add condition.
-		 *
-		 * @param connCode the connection code
-		 * @param conditionCode  the condition code
-		 * @param entityClass    the entity class
-		 * @param identifyKey    the identify key
-		 * @param matchCondition the match condition
-		 */
-		private void add(final ConnectionCode connCode, final ConditionCode conditionCode,
-		                 final Class<?> entityClass, final String identifyKey, final MatchCondition matchCondition) {
-			this.queryBuilder.addQueryCondition(entityClass, connCode, conditionCode,
-					identifyKey, matchCondition);
-		}
-
-		/**
-		 * Add order by column
-		 *
-		 * @param entityClass the entity class
-		 * @param columnName  column name
-		 */
-		public void orderByItem(final Class<?> entityClass, final String columnName) {
-			this.orderByItem(entityClass, columnName, OrderByColumn.OrderByType.ASC);
-		}
-
-		/**
-		 * Add order by column and sort type
-		 *
-		 * @param entityClass  the entity class
-		 * @param identifyName column identify name
-		 * @param orderByType  sort type
-		 * @throws QueryException the query exception
-		 */
-		public void orderByItem(final Class<?> entityClass, final String identifyName,
-		                        final OrderByColumn.OrderByType orderByType) throws QueryException {
-			if (this.queryBuilder.contains(entityClass)) {
-				this.orderByColumns.add(new OrderByColumn(orderByType, entityClass, identifyName));
-			}
-		}
-
-		/**
-		 * Add order by column and sort type
-		 *
-		 * @param entityClass  the entity class
-		 * @param identifyName column identify name
-		 * @throws QueryException the query exception
-		 */
-		public void groupByItem(final Class<?> entityClass, final String identifyName) throws QueryException {
-			if (this.queryBuilder.contains(entityClass)) {
-				this.groupByColumns.add(new GroupByColumn(entityClass, identifyName));
-			}
-		}
-
-		/**
-		 * Use cache builder.
-		 *
-		 * @param cacheables the cacheables
-		 */
-		public void useCache(final boolean cacheables) {
-			this.cacheables = cacheables;
-		}
-
-		/**
-		 * Config pager query builder.
-		 *
-		 * @param pageNo    the page no
-		 * @param pageLimit the page limit
-		 */
-		public void configPager(final int pageNo, final int pageLimit) {
-			this.pageLimit = queryLimit(pageLimit);
-			this.offset = queryOffset(pageNo, this.pageLimit);
-		}
-
-		public void pagerParameter(final int offset, final int pageLimit) {
-			this.offset = (offset < 0) ? Globals.INITIALIZE_INT_VALUE : offset;
-			this.pageLimit = queryLimit(pageLimit);
-		}
-
-		/**
-		 * For update query builder.
-		 *
-		 * @param forUpdate the for update
-		 */
-		public void forUpdate(final boolean forUpdate) {
-			this.forUpdate = forUpdate;
-		}
-
-		/**
-		 * Lock option builder.
-		 *
-		 * @param lockOption the lock option
-		 */
-		public void lockOption(final LockOption lockOption) {
-			this.lockOption = this.forUpdate ? lockOption : LockOption.NONE;
-		}
-
-		/**
-		 * Analyze builder boolean.
-		 *
-		 * @return the boolean
-		 */
-		public boolean analyzeBuilder() {
-			return this.analyzed;
-		}
-
-		/**
-		 * Match database alias boolean.
-		 *
-		 * @param databaseName the database name
-		 * @return the boolean
-		 */
-		public boolean match(final String databaseName) {
-			return this.queryBuilder.match(databaseName);
-		}
-
-		/**
-		 * Build query info.
-		 *
-		 * @return the query info
-		 */
-		public QueryInfo build() {
-			return new QueryInfo(this.queryBuilder.build(), this.orderByColumns, this.groupByColumns, this.pageLimit,
-					this.offset, this.cacheables, this.forUpdate, this.lockOption, this.analyzed);
-		}
-	}
-
-	private static int queryOffset(final int pageNo, final int pageLimit) {
-		int currentPage = (pageNo <= 0) ? DatabaseCommons.DEFAULT_PAGE_NO : pageNo;
-		return (currentPage - 1) * queryLimit(pageLimit);
-	}
-
-	private static int queryLimit(final int pageLimit) {
-		return pageLimit <= 0 ? DatabaseCommons.DEFAULT_PAGE_LIMIT : pageLimit;
-	}
+    /**
+     * <h3 class="en-US">Setter method for query page limit</h3>
+     * <h3 class="zh-CN">查询分页记录数的Setter方法</h3>
+     *
+     * @param pageLimit <span class="en-US">Query page limit</span>
+     *                  <span class="zh-CN">查询分页记录数</span>
+     */
+    public void setPageLimit(int pageLimit) {
+        this.pageLimit = pageLimit;
+    }
 }
