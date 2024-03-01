@@ -7,6 +7,7 @@
 
 English
 [简体中文](README_zh_CN.md)
+[繁體中文](README_zh_TW.md)
 
 An interface toolkit created for the data processing platform, 
 which provides query input and output formats of the unified data platform, 

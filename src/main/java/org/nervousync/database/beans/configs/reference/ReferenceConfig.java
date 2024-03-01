@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @param <T> <span class="en-US">Reference entity class</span>
  *            <span class="zh-CN">外键实体类</span>
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Mar 30, 2016 17:48:56 $
  */
 @XmlType(name = "reference_config")

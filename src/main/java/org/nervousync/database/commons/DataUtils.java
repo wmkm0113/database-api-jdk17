@@ -54,7 +54,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <h2 class="en-US">Data import/export utilities</h2>
  * <h2 class="zh-CN">数据导入导出工具</h2>
  *
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Oct 26, 2023 15:04:37 $
  */
 public final class DataUtils {
@@ -588,7 +588,7 @@ public final class DataUtils {
      * <h2 class="en-US">Memory-only task adapter implementation class</h2>
      * <h2 class="zh-CN">仅使用内存的任务适配器实现类</h2>
      *
-     * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+     * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
      * @version $Revision: 1.0.0 $ $Date: Oct 26, 2023 16:42:18 $
      */
     private static final class MemoryTaskProviderImpl implements TaskProvider {

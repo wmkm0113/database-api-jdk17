@@ -31,7 +31,7 @@ import java.io.Serial;
  * <h2 class="en-US">Join column define</h2>
  * <h2 class="zh-CN">关联列信息定义</h2>
  *
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Feb 17, 2021 16:35:51 $
  */
 @XmlType(name = "join_info", namespace = "https://nervousync.org/schemas/query")

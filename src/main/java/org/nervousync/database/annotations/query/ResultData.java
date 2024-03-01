@@ -23,7 +23,7 @@ import java.lang.annotation.*;
  * <h2 class="en-US">The annotation of query result data</h2>
  * <h2 class="zh-CN">查询结果数据的注解</h2>
  *
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Nov 15, 2023 15:30:22 $
  */
 @Documented

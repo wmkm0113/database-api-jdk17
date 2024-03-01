@@ -30,7 +30,7 @@ import java.io.Serial;
  * <h2 class="en-US">Query order by column define</h2>
  * <h2 class="zh-CN">查询排序列信息定义</h2>
  *
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Sep 14， 2020 17:15:28 $
  */
 @XmlType(name = "order_by", namespace = "https://nervousync.org/schemas/query")

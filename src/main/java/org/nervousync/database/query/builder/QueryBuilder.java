@@ -51,7 +51,7 @@ import java.util.*;
  * <h2 class="en-US">Query information builder</h2>
  * <h2 class="zh-CN">查询信息构建器</h2>
  *
- * @author Steven Wee	<a href="mailto:wmkm0113@Hotmail.com">wmkm0113@Hotmail.com</a>
+ * @author Steven Wee	<a href="mailto:wmkm0113@gmail.com">wmkm0113@gmail.com</a>
  * @version $Revision: 1.0.0 $ $Date: Jul 30, 2023 15:37:53 $
  */
 public final class QueryBuilder implements Builder<QueryInfo> {
