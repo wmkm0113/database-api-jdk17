@@ -39,8 +39,8 @@ public final class SensitiveConfig {
     private final int suffixLength;
 
     /**
-     * <h2 class="en-US">Private constructor for sensitive information processing configuration</h2>
-     * <h2 class="zh-CN">敏感信息处理配置的私有构造方法</h2>
+     * <h4 class="en-US">Private constructor for sensitive information processing configuration</h4>
+     * <h4 class="zh-CN">敏感信息处理配置的私有构造方法</h4>
      *
      * @param prefixLength <span class="en-US">Show prefix length</span>
      *                     <span class="zh-CN">显示前缀长度</span>
@@ -53,8 +53,8 @@ public final class SensitiveConfig {
     }
 
     /**
-     * <h2 class="en-US">Static methods are used to generate sensitive information processing configuration instance objects</h2>
-     * <h2 class="zh-CN">静态方法用于生成敏感信息处理配置实例对象</h2>
+     * <h4 class="en-US">Static methods are used to generate sensitive information processing configuration instance objects</h4>
+     * <h4 class="zh-CN">静态方法用于生成敏感信息处理配置实例对象</h4>
      *
      * @param sensitiveType <span class="en-US">Sensitive information data type</span>
      *                      <span class="zh-CN">敏感信息数据类型</span>
@@ -109,8 +109,8 @@ public final class SensitiveConfig {
     }
 
     /**
-     * <h3 class="en-US">Getter method for show prefix length</h3>
-     * <h3 class="zh-CN">显示前缀长度的Getter方法</h3>
+     * <h4 class="en-US">Getter method for show prefix length</h4>
+     * <h4 class="zh-CN">显示前缀长度的Getter方法</h4>
      *
      * @return <span class="en-US">Show prefix length</span>
      * <span class="zh-CN">显示前缀长度</span>
@@ -120,8 +120,8 @@ public final class SensitiveConfig {
     }
 
     /**
-     * <h3 class="en-US">Getter method for show suffix length</h3>
-     * <h3 class="zh-CN">显示后缀长度的Getter方法</h3>
+     * <h4 class="en-US">Getter method for show suffix length</h4>
+     * <h4 class="zh-CN">显示后缀长度的Getter方法</h4>
      *
      * @return <span class="en-US">Show suffix length</span>
      * <span class="zh-CN">显示后缀长度</span>

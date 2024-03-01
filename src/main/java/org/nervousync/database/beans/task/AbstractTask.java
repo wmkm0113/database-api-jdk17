@@ -104,12 +104,16 @@ public abstract class AbstractTask extends BeanObject {
     @XmlElement(name = "identify_code")
     private String identifyCode;
 
+    /**
+     * <h4 class="en-US">Constructor method for abstract task information</h4>
+     * <h4 class="zh-CN">抽象任务信息的构造方法</h4>
+     */
     protected AbstractTask() {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task unique identification code</h3>
-     * <h3 class="zh-CN">任务唯一识别代码的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task unique identification code</h4>
+     * <h4 class="zh-CN">任务唯一识别代码的Getter方法</h4>
      *
      * @return <span class="en-US">Task unique identification code</span>
      * <span class="zh-CN">任务唯一识别代码</span>
@@ -119,8 +123,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task unique identification code</h3>
-     * <h3 class="zh-CN">任务唯一识别代码的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task unique identification code</h4>
+     * <h4 class="zh-CN">任务唯一识别代码的Setter方法</h4>
      *
      * @param taskCode <span class="en-US">Task unique identification code</span>
      *                 <span class="zh-CN">任务唯一识别代码</span>
@@ -130,8 +134,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task creation user code</h3>
-     * <h3 class="zh-CN">任务创建用户代码的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task creation user code</h4>
+     * <h4 class="zh-CN">任务创建用户代码的Getter方法</h4>
      *
      * @return <span class="en-US">Task creation user code</span>
      * <span class="zh-CN">任务创建用户代码</span>
@@ -141,8 +145,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task creation user code</h3>
-     * <h3 class="zh-CN">任务创建用户代码的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task creation user code</h4>
+     * <h4 class="zh-CN">任务创建用户代码的Setter方法</h4>
      *
      * @param userCode <span class="en-US">Task creation user code</span>
      *                 <span class="zh-CN">任务创建用户代码</span>
@@ -152,8 +156,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task creation time</h3>
-     * <h3 class="zh-CN">任务创建时间的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task creation time</h4>
+     * <h4 class="zh-CN">任务创建时间的Getter方法</h4>
      *
      * @return <span class="en-US">Task creation time</span>
      * <span class="zh-CN">任务创建时间</span>
@@ -163,8 +167,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task creation time</h3>
-     * <h3 class="zh-CN">任务创建时间的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task creation time</h4>
+     * <h4 class="zh-CN">任务创建时间的Setter方法</h4>
      *
      * @param createTime <span class="en-US">Task creation time</span>
      *                   <span class="zh-CN">任务创建时间</span>
@@ -174,8 +178,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task start processing time</h3>
-     * <h3 class="zh-CN">任务开始处理时间的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task start processing time</h4>
+     * <h4 class="zh-CN">任务开始处理时间的Getter方法</h4>
      *
      * @return <span class="en-US">Task start processing time</span>
      * <span class="zh-CN">任务开始处理时间</span>
@@ -185,8 +189,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task start processing time</h3>
-     * <h3 class="zh-CN">任务开始处理时间的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task start processing time</h4>
+     * <h4 class="zh-CN">任务开始处理时间的Setter方法</h4>
      *
      * @param startTime <span class="en-US">Task start processing time</span>
      *                  <span class="zh-CN">任务开始处理时间</span>
@@ -196,8 +200,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task processing end time</h3>
-     * <h3 class="zh-CN">任务处理结束时间的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task processing end time</h4>
+     * <h4 class="zh-CN">任务处理结束时间的Getter方法</h4>
      *
      * @return <span class="en-US">Task processing end time</span>
      * <span class="zh-CN">任务处理结束时间</span>
@@ -207,8 +211,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task processing end time</h3>
-     * <h3 class="zh-CN">任务处理结束时间的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task processing end time</h4>
+     * <h4 class="zh-CN">任务处理结束时间的Setter方法</h4>
      *
      * @param endTime <span class="en-US">Task processing end time</span>
      *                <span class="zh-CN">任务处理结束时间</span>
@@ -218,8 +222,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task status code</h3>
-     * <h3 class="zh-CN">任务状态代码的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task status code</h4>
+     * <h4 class="zh-CN">任务状态代码的Getter方法</h4>
      *
      * @return <span class="en-US">Task status code</span>
      * <span class="zh-CN">任务状态代码</span>
@@ -229,8 +233,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task status code</h3>
-     * <h3 class="zh-CN">任务状态代码的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task status code</h4>
+     * <h4 class="zh-CN">任务状态代码的Setter方法</h4>
      *
      * @param taskStatus <span class="en-US">Task status code</span>
      *                   <span class="zh-CN">任务状态代码</span>
@@ -240,8 +244,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for error status during task processing</h3>
-     * <h3 class="zh-CN">任务处理过程中出错状态的Getter方法</h3>
+     * <h4 class="en-US">Getter method for error status during task processing</h4>
+     * <h4 class="zh-CN">任务处理过程中出错状态的Getter方法</h4>
      *
      * @return <span class="en-US">Error status during task processing</span>
      * <span class="zh-CN">任务处理过程中出错状态</span>
@@ -251,8 +255,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for error status during task processing</h3>
-     * <h3 class="zh-CN">任务处理过程中出错状态的Setter方法</h3>
+     * <h4 class="en-US">Setter method for error status during task processing</h4>
+     * <h4 class="zh-CN">任务处理过程中出错状态的Setter方法</h4>
      *
      * @param hasError <span class="en-US">Error status during task processing</span>
      *                 <span class="zh-CN">任务处理过程中出错状态</span>
@@ -262,8 +266,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task processing status</h3>
-     * <h3 class="zh-CN">任务处理状态的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task processing status</h4>
+     * <h4 class="zh-CN">任务处理状态的Getter方法</h4>
      *
      * @return <span class="en-US">Task processing status</span>
      * <span class="zh-CN">任务处理状态</span>
@@ -273,8 +277,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task processing status</h3>
-     * <h3 class="zh-CN">任务处理状态的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task processing status</h4>
+     * <h4 class="zh-CN">任务处理状态的Setter方法</h4>
      *
      * @param processing <span class="en-US">Task processing status</span>
      *                   <span class="zh-CN">任务处理状态</span>
@@ -284,8 +288,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for error message for task processing error</h3>
-     * <h3 class="zh-CN">任务处理出错的错误信息的Getter方法</h3>
+     * <h4 class="en-US">Getter method for error message for task processing error</h4>
+     * <h4 class="zh-CN">任务处理出错的错误信息的Getter方法</h4>
      *
      * @return <span class="en-US">Error message for task processing error</span>
      * <span class="zh-CN">任务处理出错的错误信息</span>
@@ -295,8 +299,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for error message for task processing error</h3>
-     * <h3 class="zh-CN">任务处理出错的错误信息的Setter方法</h3>
+     * <h4 class="en-US">Setter method for error message for task processing error</h4>
+     * <h4 class="zh-CN">任务处理出错的错误信息的Setter方法</h4>
      *
      * @param errorMessage <span class="en-US">Error message for task processing error</span>
      *                     <span class="zh-CN">任务处理出错的错误信息</span>
@@ -306,8 +310,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for task processing node identification code</h3>
-     * <h3 class="zh-CN">任务处理节点识别代码的Getter方法</h3>
+     * <h4 class="en-US">Getter method for task processing node identification code</h4>
+     * <h4 class="zh-CN">任务处理节点识别代码的Getter方法</h4>
      *
      * @return <span class="en-US">Task processing node identification code</span>
      * <span class="zh-CN">任务处理节点识别代码</span>
@@ -317,8 +321,8 @@ public abstract class AbstractTask extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for task processing node identification code</h3>
-     * <h3 class="zh-CN">任务处理节点识别代码的Setter方法</h3>
+     * <h4 class="en-US">Setter method for task processing node identification code</h4>
+     * <h4 class="zh-CN">任务处理节点识别代码的Setter方法</h4>
      *
      * @param identifyCode <span class="en-US">Task processing node identification code</span>
      *                     <span class="zh-CN">任务处理节点识别代码</span>

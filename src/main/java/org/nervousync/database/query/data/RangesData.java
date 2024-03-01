@@ -55,15 +55,15 @@ public final class RangesData extends BeanObject {
     private Object endValue;
 
     /**
-     * <h3 class="en-US">Constructor method for match condition range define</h3>
-     * <h3 class="zh-CN">匹配条件范围定义的构造方法</h3>
+     * <h4 class="en-US">Constructor method for match condition range define</h4>
+     * <h4 class="zh-CN">匹配条件范围定义的构造方法</h4>
      */
     public RangesData() {
     }
 
     /**
-     * <h3 class="en-US">Constructor method for match condition range define</h3>
-     * <h3 class="zh-CN">匹配条件范围定义的构造方法</h3>
+     * <h4 class="en-US">Constructor method for match condition range define</h4>
+     * <h4 class="zh-CN">匹配条件范围定义的构造方法</h4>
      *
      * @param beginValue <span class="en-US">Begin value</span>
      *                   <span class="zh-CN">起始值</span>
@@ -76,8 +76,8 @@ public final class RangesData extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for begin value</h3>
-     * <h3 class="zh-CN">起始值的Getter方法</h3>
+     * <h4 class="en-US">Getter method for begin value</h4>
+     * <h4 class="zh-CN">起始值的Getter方法</h4>
      *
      * @return <span class="en-US">Begin value</span>
      * <span class="zh-CN">起始值</span>
@@ -87,8 +87,8 @@ public final class RangesData extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for begin value</h3>
-     * <h3 class="zh-CN">起始值的Setter方法</h3>
+     * <h4 class="en-US">Setter method for begin value</h4>
+     * <h4 class="zh-CN">起始值的Setter方法</h4>
      *
      * @param beginValue <span class="en-US">Begin value</span>
      *                   <span class="zh-CN">起始值</span>
@@ -98,8 +98,8 @@ public final class RangesData extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for end value</h3>
-     * <h3 class="zh-CN">终止值的Getter方法</h3>
+     * <h4 class="en-US">Getter method for end value</h4>
+     * <h4 class="zh-CN">终止值的Getter方法</h4>
      *
      * @return <span class="en-US">End value</span>
      * <span class="zh-CN">终止值</span>
@@ -109,8 +109,8 @@ public final class RangesData extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for end value</h3>
-     * <h3 class="zh-CN">终止值的Setter方法</h3>
+     * <h4 class="en-US">Setter method for end value</h4>
+     * <h4 class="zh-CN">终止值的Setter方法</h4>
      *
      * @param endValue <span class="en-US">End value</span>
      *                 <span class="zh-CN">终止值</span>

@@ -90,15 +90,15 @@ public final class ReferenceConfig<T> extends BeanObject {
 	private List<JoinConfig> joinColumnList;
 
 	/**
-	 * <h3 class="en-US">Constructor method for reference configure information</h3>
-	 * <h3 class="zh-CN">外键引用配置信息的构造方法</h3>
+	 * <h4 class="en-US">Constructor method for reference configure information</h4>
+	 * <h4 class="zh-CN">外键引用配置信息的构造方法</h4>
 	 */
 	public ReferenceConfig() {
 	}
 
 	/**
-	 * <h3 class="en-US">Generate reference configure information instance by given arguments</h3>
-	 * <h3 class="zh-CN">根据给定的参数信息生成外键引用配置信息实例对象</h3>
+	 * <h4 class="en-US">Generate reference configure information instance by given arguments</h4>
+	 * <h4 class="zh-CN">根据给定的参数信息生成外键引用配置信息实例对象</h4>
 	 *
 	 * @param <T>            <span class="en-US">Reference entity class</span>
 	 *                       <span class="zh-CN">外键实体类</span>
@@ -143,8 +143,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for column value is lazy load</h3>
-	 * <h3 class="zh-CN">列值懒加载的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for column value is lazy load</h4>
+	 * <h4 class="zh-CN">列值懒加载的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Column value is lazy load</span>
 	 * <span class="zh-CN">列值懒加载</span>
@@ -154,8 +154,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for column value is lazy load</h3>
-	 * <h3 class="zh-CN">列值懒加载的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for column value is lazy load</h4>
+	 * <h4 class="zh-CN">列值懒加载的Setter方法</h4>
 	 *
 	 * @param lazyLoad <span class="en-US">Column value is lazy load</span>
 	 *                 <span class="zh-CN">列值懒加载</span>
@@ -165,8 +165,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for return value is array</h3>
-	 * <h3 class="zh-CN">返回值是数组或列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for return value is array</h4>
+	 * <h4 class="zh-CN">返回值是数组或列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Return value is array</span>
 	 * <span class="zh-CN">返回值是数组或列表</span>
@@ -176,8 +176,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for return value is array</h3>
-	 * <h3 class="zh-CN">返回值是数组或列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for return value is array</h4>
+	 * <h4 class="zh-CN">返回值是数组或列表的Setter方法</h4>
 	 *
 	 * @param returnArray <span class="en-US">Return value is array</span>
 	 *                    <span class="zh-CN">返回值是数组或列表</span>
@@ -187,8 +187,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for target reference entity class</h3>
-	 * <h3 class="zh-CN">目标外键实体类的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for target reference entity class</h4>
+	 * <h4 class="zh-CN">目标外键实体类的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Target reference entity class</span>
 	 * <span class="zh-CN">目标外键实体类</span>
@@ -198,8 +198,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for target reference entity class</h3>
-	 * <h3 class="zh-CN">目标外键实体类的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for target reference entity class</h4>
+	 * <h4 class="zh-CN">目标外键实体类的Setter方法</h4>
 	 *
 	 * @param referenceClass <span class="en-US">Target reference entity class</span>
 	 *                       <span class="zh-CN">目标外键实体类</span>
@@ -209,8 +209,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for column mapping field name</h3>
-	 * <h3 class="zh-CN">列映射的属性名的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for column mapping field name</h4>
+	 * <h4 class="zh-CN">列映射的属性名的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Column mapping field name</span>
 	 * <span class="zh-CN">列映射的属性名</span>
@@ -220,8 +220,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for column mapping field name</h3>
-	 * <h3 class="zh-CN">列映射的属性名的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for column mapping field name</h4>
+	 * <h4 class="zh-CN">列映射的属性名的Setter方法</h4>
 	 *
 	 * @param fieldName <span class="en-US">Column mapping field name</span>
 	 *                  <span class="zh-CN">列映射的属性名</span>
@@ -231,8 +231,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for reference cascade type array</h3>
-	 * <h3 class="zh-CN">外键级联状态数组的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for reference cascade type array</h4>
+	 * <h4 class="zh-CN">外键级联状态数组的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Reference cascade type array</span>
 	 * <span class="zh-CN">外键级联状态数组</span>
@@ -242,8 +242,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for reference cascade type array</h3>
-	 * <h3 class="zh-CN">外键级联状态数组的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for reference cascade type array</h4>
+	 * <h4 class="zh-CN">外键级联状态数组的Setter方法</h4>
 	 *
 	 * @param cascadeTypes <span class="en-US">Reference cascade type array</span>
 	 *                     <span class="zh-CN">外键级联状态数组</span>
@@ -253,8 +253,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for reference join column configure list</h3>
-	 * <h3 class="zh-CN">外键关联列配置信息列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for reference join column configure list</h4>
+	 * <h4 class="zh-CN">外键关联列配置信息列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Reference join column configure list</span>
 	 * <span class="zh-CN">外键关联列配置信息列表</span>
@@ -264,8 +264,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for reference join column configure list</h3>
-	 * <h3 class="zh-CN">外键关联列配置信息列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for reference join column configure list</h4>
+	 * <h4 class="zh-CN">外键关联列配置信息列表的Setter方法</h4>
 	 *
 	 * @param joinColumnList <span class="en-US">Reference join column configure list</span>
 	 *                       <span class="zh-CN">外键关联列配置信息列表</span>
@@ -275,8 +275,8 @@ public final class ReferenceConfig<T> extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Match the given entity class was same as current target reference entity class</h3>
-	 * <h3 class="zh-CN">匹配给定的实体类对象是否与当前目标外键实体类信息一致</h3>
+	 * <h4 class="en-US">Match the given entity class was same as current target reference entity class</h4>
+	 * <h4 class="zh-CN">匹配给定的实体类对象是否与当前目标外键实体类信息一致</h4>
 	 *
 	 * @param entityClass <span class="en-US">Given entity class</span>
 	 *                    <span class="zh-CN">给定的实体类</span>

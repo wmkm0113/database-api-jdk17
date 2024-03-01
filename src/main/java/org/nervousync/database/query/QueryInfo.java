@@ -145,8 +145,8 @@ public final class QueryInfo extends BeanObject {
     private int pageLimit;
 
 	/**
-	 * <h3 class="en-US">Constructor method for query information define</h3>
-	 * <h3 class="zh-CN">查询条件信息的构造方法</h3>
+	 * <h4 class="en-US">Constructor method for query information define</h4>
+	 * <h4 class="zh-CN">查询条件信息的构造方法</h4>
 	 */
 	public QueryInfo() {
 		this.queryJoins = new ArrayList<>();
@@ -155,8 +155,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query name</h3>
-	 * <h3 class="zh-CN">查询名称的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query name</h4>
+	 * <h4 class="zh-CN">查询名称的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query name</span>
 	 * <span class="zh-CN">查询名称</span>
@@ -166,8 +166,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query name</h3>
-	 * <h3 class="zh-CN">查询名称的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query name</h4>
+	 * <h4 class="zh-CN">查询名称的Setter方法</h4>
 	 *
 	 * @param identifyName <span class="en-US">Query name</span>
 	 *                     <span class="zh-CN">查询名称</span>
@@ -177,8 +177,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query driven table entity class</h3>
-	 * <h3 class="zh-CN">查询驱动表实体类的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query driven table entity class</h4>
+	 * <h4 class="zh-CN">查询驱动表实体类的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query driven table entity class</span>
 	 * <span class="zh-CN">查询驱动表实体类</span>
@@ -188,8 +188,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query driven table entity class</h3>
-	 * <h3 class="zh-CN">查询驱动表实体类的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query driven table entity class</h4>
+	 * <h4 class="zh-CN">查询驱动表实体类的Setter方法</h4>
 	 *
 	 * @param mainEntity <span class="en-US">Query driven table entity class</span>
 	 *                   <span class="zh-CN">查询驱动表实体类</span>
@@ -199,8 +199,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for related query information list</h3>
-	 * <h3 class="zh-CN">关联查询信息列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for related query information list</h4>
+	 * <h4 class="zh-CN">关联查询信息列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Related query information list</span>
 	 * <span class="zh-CN">关联查询信息列表</span>
@@ -210,8 +210,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for related query information list</h3>
-	 * <h3 class="zh-CN">关联查询信息列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for related query information list</h4>
+	 * <h4 class="zh-CN">关联查询信息列表的Setter方法</h4>
 	 *
 	 * @param queryJoins <span class="en-US">Related query information list</span>
 	 *                   <span class="zh-CN">关联查询信息列表</span>
@@ -221,8 +221,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query item instance list</h3>
-	 * <h3 class="zh-CN">查询项目实例对象列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query item instance list</h4>
+	 * <h4 class="zh-CN">查询项目实例对象列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query item instance list</span>
 	 * <span class="zh-CN">查询项目实例对象列表</span>
@@ -232,8 +232,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query item instance list</h3>
-	 * <h3 class="zh-CN">查询项目实例对象列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query item instance list</h4>
+	 * <h4 class="zh-CN">查询项目实例对象列表的Setter方法</h4>
 	 *
 	 * @param itemList <span class="en-US">Query item instance list</span>
 	 *                 <span class="zh-CN">查询项目实例对象列表</span>
@@ -245,8 +245,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query condition instance list</h3>
-	 * <h3 class="zh-CN">查询条件实例对象列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query condition instance list</h4>
+	 * <h4 class="zh-CN">查询条件实例对象列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query condition instance list</span>
 	 * <span class="zh-CN">查询条件实例对象列表</span>
@@ -256,8 +256,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query condition instance list</h3>
-	 * <h3 class="zh-CN">查询条件实例对象列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query condition instance list</h4>
+	 * <h4 class="zh-CN">查询条件实例对象列表的Setter方法</h4>
 	 *
 	 * @param conditionList <span class="en-US">Query condition instance list</span>
 	 *                      <span class="zh-CN">查询条件实例对象列表</span>
@@ -268,8 +268,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query order by columns list</h3>
-	 * <h3 class="zh-CN">查询排序数据列列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query order by columns list</h4>
+	 * <h4 class="zh-CN">查询排序数据列列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query order by columns list</span>
 	 * <span class="zh-CN">查询排序数据列列表</span>
@@ -279,8 +279,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query order by columns list</h3>
-	 * <h3 class="zh-CN">查询排序数据列列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query order by columns list</h4>
+	 * <h4 class="zh-CN">查询排序数据列列表的Setter方法</h4>
 	 *
 	 * @param orderByList <span class="en-US">Query order by columns list</span>
 	 *                    <span class="zh-CN">查询排序数据列列表</span>
@@ -291,8 +291,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query group by columns list</h3>
-	 * <h3 class="zh-CN">查询分组数据列列表的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query group by columns list</h4>
+	 * <h4 class="zh-CN">查询分组数据列列表的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query group by columns list</span>
 	 * <span class="zh-CN">查询分组数据列列表</span>
@@ -302,8 +302,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query group by columns list</h3>
-	 * <h3 class="zh-CN">查询分组数据列列表的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query group by columns list</h4>
+	 * <h4 class="zh-CN">查询分组数据列列表的Setter方法</h4>
 	 *
 	 * @param groupByList <span class="en-US">Query group by columns list</span>
 	 *                    <span class="zh-CN">查询分组数据列列表</span>
@@ -314,8 +314,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query result can cacheable</h3>
-	 * <h3 class="zh-CN">查询结果可以缓存的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query result can cacheable</h4>
+	 * <h4 class="zh-CN">查询结果可以缓存的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query result can cacheable</span>
 	 * <span class="zh-CN">查询结果可以缓存</span>
@@ -325,8 +325,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query result can cacheable</h3>
-	 * <h3 class="zh-CN">查询结果可以缓存的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query result can cacheable</h4>
+	 * <h4 class="zh-CN">查询结果可以缓存的Setter方法</h4>
 	 *
 	 * @param cacheables <span class="en-US">Query result can cacheable</span>
 	 *                   <span class="zh-CN">查询结果可以缓存</span>
@@ -336,8 +336,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query result for update</h3>
-	 * <h3 class="zh-CN">查询结果用于批量更新记录的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query result for update</h4>
+	 * <h4 class="zh-CN">查询结果用于批量更新记录的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query result for update</span>
 	 * <span class="zh-CN">查询结果用于批量更新记录</span>
@@ -347,8 +347,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query result for update</h3>
-	 * <h3 class="zh-CN">查询结果用于批量更新记录的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query result for update</h4>
+	 * <h4 class="zh-CN">查询结果用于批量更新记录的Setter方法</h4>
 	 *
 	 * @param forUpdate <span class="en-US">Query result for update</span>
 	 *                  <span class="zh-CN">查询结果用于批量更新记录</span>
@@ -358,8 +358,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Getter method for query record lock option</h3>
-	 * <h3 class="zh-CN">查询记录锁定选项的Getter方法</h3>
+	 * <h4 class="en-US">Getter method for query record lock option</h4>
+	 * <h4 class="zh-CN">查询记录锁定选项的Getter方法</h4>
 	 *
 	 * @return <span class="en-US">Query record lock option</span>
 	 * <span class="zh-CN">查询记录锁定选项</span>
@@ -369,8 +369,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
 	/**
-	 * <h3 class="en-US">Setter method for query record lock option</h3>
-	 * <h3 class="zh-CN">查询记录锁定选项的Setter方法</h3>
+	 * <h4 class="en-US">Setter method for query record lock option</h4>
+	 * <h4 class="zh-CN">查询记录锁定选项的Setter方法</h4>
 	 *
 	 * @param lockOption <span class="en-US">Query record lock option</span>
 	 *                   <span class="zh-CN">查询记录锁定选项</span>
@@ -380,8 +380,8 @@ public final class QueryInfo extends BeanObject {
 	}
 
     /**
-     * <h3 class="en-US">Getter method for current page number</h3>
-     * <h3 class="zh-CN">当前页数的Getter方法</h3>
+     * <h4 class="en-US">Getter method for current page number</h4>
+     * <h4 class="zh-CN">当前页数的Getter方法</h4>
      *
      * @return <span class="en-US">Current page number</span>
      * <span class="zh-CN">当前页数</span>
@@ -391,8 +391,8 @@ public final class QueryInfo extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for current page number</h3>
-     * <h3 class="zh-CN">当前页数的Setter方法</h3>
+     * <h4 class="en-US">Setter method for current page number</h4>
+     * <h4 class="zh-CN">当前页数的Setter方法</h4>
      *
      * @param pageNo <span class="en-US">Current page number</span>
      *               <span class="zh-CN">当前页数</span>
@@ -402,8 +402,8 @@ public final class QueryInfo extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for query page limit</h3>
-     * <h3 class="zh-CN">查询分页记录数的Getter方法</h3>
+     * <h4 class="en-US">Getter method for query page limit</h4>
+     * <h4 class="zh-CN">查询分页记录数的Getter方法</h4>
      *
      * @return <span class="en-US">Query page limit</span>
      * <span class="zh-CN">查询分页记录数</span>
@@ -413,8 +413,8 @@ public final class QueryInfo extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for query page limit</h3>
-     * <h3 class="zh-CN">查询分页记录数的Setter方法</h3>
+     * <h4 class="en-US">Setter method for query page limit</h4>
+     * <h4 class="zh-CN">查询分页记录数的Setter方法</h4>
      *
      * @param pageLimit <span class="en-US">Query page limit</span>
      *                  <span class="zh-CN">查询分页记录数</span>

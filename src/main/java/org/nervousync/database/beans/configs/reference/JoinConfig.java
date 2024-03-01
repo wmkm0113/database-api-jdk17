@@ -36,15 +36,15 @@ public final class JoinConfig extends BeanObject {
     private String referenceField;
 
     /**
-     * <h3 class="en-US">Constructor method for join configure information</h3>
-     * <h3 class="zh-CN">外键关联列配置信息的构造方法</h3>
+     * <h4 class="en-US">Constructor method for join configure information</h4>
+     * <h4 class="zh-CN">外键关联列配置信息的构造方法</h4>
      */
     public JoinConfig() {
     }
 
     /**
-     * <h3 class="en-US">Getter method for the field name in main table</h3>
-     * <h3 class="zh-CN">主表中的属性名称的Getter方法</h3>
+     * <h4 class="en-US">Getter method for the field name in main table</h4>
+     * <h4 class="zh-CN">主表中的属性名称的Getter方法</h4>
      *
      * @return <span class="en-US">The field name in main table</span>
      * <span class="zh-CN">主表中的属性名称</span>
@@ -54,8 +54,8 @@ public final class JoinConfig extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for the field name in main table</h3>
-     * <h3 class="zh-CN">主表中的属性名称的Setter方法</h3>
+     * <h4 class="en-US">Setter method for the field name in main table</h4>
+     * <h4 class="zh-CN">主表中的属性名称的Setter方法</h4>
      *
      * @param currentField <span class="en-US">The field name in main table</span>
      *                     <span class="zh-CN">主表中的属性名称</span>
@@ -65,8 +65,8 @@ public final class JoinConfig extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Getter method for the field name in reference table</h3>
-     * <h3 class="zh-CN">关联表中的属性名称的Getter方法</h3>
+     * <h4 class="en-US">Getter method for the field name in reference table</h4>
+     * <h4 class="zh-CN">关联表中的属性名称的Getter方法</h4>
      *
      * @return <span class="en-US">The field name in reference table</span>
      * <span class="zh-CN">关联表中的属性名称</span>
@@ -76,8 +76,8 @@ public final class JoinConfig extends BeanObject {
     }
 
     /**
-     * <h3 class="en-US">Setter method for the field name in reference table</h3>
-     * <h3 class="zh-CN">关联表中的属性名称的Setter方法</h3>
+     * <h4 class="en-US">Setter method for the field name in reference table</h4>
+     * <h4 class="zh-CN">关联表中的属性名称的Setter方法</h4>
      *
      * @param referenceField <span class="en-US">The field name in reference table</span>
      *                       <span class="zh-CN">关联表中的属性名称</span>

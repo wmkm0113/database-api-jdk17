@@ -35,62 +35,71 @@ import java.util.Optional;
  * @version $Revision: 1.0.0 $ $Date: Oct 26, 2023 15:25:10 $
  */
 public final class TransferField {
-    /**
-     * <span class="en-US">Column order number in Excel</span>
-     * <span class="zh-CN">Excel表中的列排列序号</span>
-     */
-    private final int columnIndex;
-    /**
-     * <span class="en-US">Data convert configure</span>
-     * <span class="zh-CN">数据转换配置信息</span>
-     */
-    private final TransferConfig<?, ?> transferConfig;
+	/**
+	 * <span class="en-US">Column order number in Excel</span>
+	 * <span class="zh-CN">Excel表中的列排列序号</span>
+	 */
+	private final int columnIndex;
+	/**
+	 * <span class="en-US">Data convert configure</span>
+	 * <span class="zh-CN">数据转换配置信息</span>
+	 */
+	private final TransferConfig<?, ?> transferConfig;
 
-    /**
-     * <h3 class="en-US">Private constructor</h3>
-     * <h3 class="zh-CN">私有的构造方法</h3>
-     *
-     * @param columnIndex    <span class="en-US">Column order number in Excel</span>
-     *                       <span class="zh-CN">Excel表中的列排列序号</span>
-     * @param transferConfig <span class="en-US">The object instance of data transfer configure</span>
-     *                       <span class="zh-CN">数据传输配置实例对象</span>
-     */
-    private TransferField(final int columnIndex, final TransferConfig<?, ?> transferConfig) {
-        this.columnIndex = columnIndex;
-        this.transferConfig = transferConfig;
-    }
+	/**
+	 * <h4 class="en-US">Private constructor</h4>
+	 * <h4 class="zh-CN">私有的构造方法</h4>
+	 *
+	 * @param columnIndex    <span class="en-US">Column order number in Excel</span>
+	 *                       <span class="zh-CN">Excel表中的列排列序号</span>
+	 * @param transferConfig <span class="en-US">The object instance of data transfer configure</span>
+	 *                       <span class="zh-CN">数据传输配置实例对象</span>
+	 */
+	private TransferField(final int columnIndex, final TransferConfig<?, ?> transferConfig) {
+		this.columnIndex = columnIndex;
+		this.transferConfig = transferConfig;
+	}
 
-    /**
-     * <h3 class="en-US">Static method is used to initialize data transmission attribute configuration information</h3>
-     * <h3 class="zh-CN">静态方法用于初始化数据传输属性配置信息</h3>
-     *
-     * @param field <span class="en-US">Field instance object obtained by reflection</span>
-     *              <span class="zh-CN">反射获取的属性实例对象</span>
-     * @return <span class="en-US">Data field transfer configuration information object instance</span>
-     * <span class="zh-CN">数据传输属性配置信息实例对象</span>
-     * @throws DataInvalidException <span class="en-US">Getting wrong number of types for generic</span>
-     *                              <span class="zh-CN">获取泛型的类型数量错误</span>
-     */
-    public static TransferField newInstance(@Nonnull final Field field) throws DataInvalidException {
-        return new TransferField(
-                Optional.ofNullable(field.getAnnotation(ExcelColumn.class))
-                        .map(ExcelColumn::value)
-                        .orElse(Globals.DEFAULT_VALUE_INT),
-                new TransferConfig<>(field.getAnnotation(DataTransfer.class)));
-    }
+	/**
+	 * <h4 class="en-US">Static method is used to initialize data transmission attribute configuration information</h4>
+	 * <h4 class="zh-CN">静态方法用于初始化数据传输属性配置信息</h4>
+	 *
+	 * @param field <span class="en-US">Field instance object obtained by reflection</span>
+	 *              <span class="zh-CN">反射获取的属性实例对象</span>
+	 * @return <span class="en-US">Data field transfer configuration information object instance</span>
+	 * <span class="zh-CN">数据传输属性配置信息实例对象</span>
+	 * @throws DataInvalidException <span class="en-US">Getting wrong number of types for generic</span>
+	 *                              <span class="zh-CN">获取泛型的类型数量错误</span>
+	 */
+	public static TransferField newInstance(@Nonnull final Field field) throws DataInvalidException {
+		return new TransferField(
+				Optional.ofNullable(field.getAnnotation(ExcelColumn.class))
+						.map(ExcelColumn::value)
+						.orElse(Globals.DEFAULT_VALUE_INT),
+				new TransferConfig<>(field.getAnnotation(DataTransfer.class)));
+	}
 
-    /**
-     * <h3 class="en-US">Getter method for column order number in Excel</h3>
-     * <h3 class="zh-CN">Excel表中的列排列序号的Getter方法</h3>
-     *
-     * @return <span class="en-US">Column order number in Excel</span>
-     * <span class="zh-CN">Excel表中的列排列序号</span>
-     */
-    public int getColumnIndex() {
-        return this.columnIndex;
-    }
+	/**
+	 * <h4 class="en-US">Getter method for column order number in Excel</h4>
+	 * <h4 class="zh-CN">Excel表中的列排列序号的Getter方法</h4>
+	 *
+	 * @return <span class="en-US">Column order number in Excel</span>
+	 * <span class="zh-CN">Excel表中的列排列序号</span>
+	 */
+	public int getColumnIndex() {
+		return this.columnIndex;
+	}
 
-    public Object convert(final Object object) {
-        return this.transferConfig.convert(object);
-    }
+	/**
+	 * <h4 class="en-US">Convert the given data to current field type</h4>
+	 * <h4 class="zh-CN">转换给定的数据为当前属性类型值</h4>
+	 *
+	 * @param object <span class="en-US">The given data</span>
+	 *               <span class="zh-CN">给定的数据</span>
+	 * @return <span class="en-US">Converted data</span>
+	 * <span class="zh-CN">转换后的数据</span>
+	 */
+	public Object convert(final Object object) {
+		return this.transferConfig.convert(object);
+	}
 }
