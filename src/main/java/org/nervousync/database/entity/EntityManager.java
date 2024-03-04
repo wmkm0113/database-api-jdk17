@@ -27,6 +27,8 @@ import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.nervousync.commons.Globals;
 import org.nervousync.database.beans.configs.column.ColumnConfig;
+import org.nervousync.database.beans.configs.reference.JoinConfig;
+import org.nervousync.database.beans.configs.reference.ReferenceConfig;
 import org.nervousync.database.beans.configs.table.TableConfig;
 import org.nervousync.database.beans.configs.transfer.TransferBean;
 import org.nervousync.database.commons.DatabaseUtils;
@@ -262,6 +264,24 @@ public final class EntityManager {
 		return Optional.ofNullable(REGISTERED_CONFIGS.get(identifyKey))
 				.map(TableConfig::getTableName)
 				.orElse(Globals.DEFAULT_VALUE_STRING);
+	}
+
+	/**
+	 * <h4 class="en-US">Obtain the join column information list of given two entity classes</h4>
+	 * <h4 class="zh-CN">获取给定的两个实体类之间的关联列信息</h4>
+	 *
+	 * @param mainEntity <span class="en-US">Driven table entity class</span>
+	 *                   <span class="zh-CN">驱动表实体类</span>
+	 * @param joinEntity <span class="en-US">Reference entity class</span>
+	 *                   <span class="zh-CN">关联实体类</span>
+	 * @return <span class="en-US">The join column information list of given two entity classes. If not found the reference information, return the empty list</span>
+	 * <span class="zh-CN">两个实体类之间的关联列信息，如果未找到关联信息，则返回空列表</span>
+	 */
+	public static List<JoinConfig> joinConfigs(final Class<?> mainEntity, final Class<?> joinEntity) {
+		return Optional.ofNullable(tableConfig(mainEntity))
+				.map(tableConfig -> tableConfig.referenceConfig(joinEntity))
+				.map(ReferenceConfig::getJoinColumnList)
+				.orElse(new ArrayList<>());
 	}
 
 	/**

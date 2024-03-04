@@ -50,11 +50,6 @@ public enum ItemType {
      */
     RANGE,
     /**
-     * <span class="en-US">Group</span>
-     * <span class="zh-CN">组</span>
-     */
-    GROUP,
-    /**
      * <span class="en-US">Object array</span>
      * <span class="zh-CN">数据数组</span>
      */

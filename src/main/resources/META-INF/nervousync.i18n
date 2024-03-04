@@ -93,6 +93,10 @@
           "content": "Register table configure information, entity class: {0}, table name: {1}"
         },
         {
+          "key": "Table_Initialize_Warning",
+          "content": "Can't found initialized database manager instance. "
+        },
+        {
           "key": "Lazy_Load_Data_Error",
           "content": "Error querying lazy loading information"
         },
@@ -115,6 +119,10 @@
         {
           "key": "Data_Utils_Config",
           "content": "Data import and export tool configuration information: Maximum number of threads: {0}, expiration time: {1}"
+        },
+        {
+          "key": "memory.name.task.provider",
+          "content": "Task storage provider which using local memory"
         }
       ]
     },
@@ -171,6 +179,10 @@
           "content": "注册数据表配置信息，实体类：{0}，数据表：{1}，配置信息：{2}"
         },
         {
+          "key": "Table_Initialize_Warning",
+          "content": "未找到初始化的数据库管理器。"
+        },
+        {
           "key": "Lazy_Load_Data_Error",
           "content": "查询懒加载信息出错"
         },
@@ -193,6 +205,10 @@
         {
           "key": "Data_Utils_Config",
           "content": "数据导入导出工具配置信息：最大线程数：{0}，过期时间：{1}"
+        },
+        {
+          "key": "memory.name.task.provider",
+          "content": "使用本地内存的任务存储适配器"
         }
       ]
     }

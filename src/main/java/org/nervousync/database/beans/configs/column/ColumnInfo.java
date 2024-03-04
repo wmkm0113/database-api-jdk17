@@ -16,7 +16,6 @@
  */
 package org.nervousync.database.beans.configs.column;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
@@ -24,20 +23,12 @@ import jakarta.persistence.Temporal;
 import jakarta.xml.bind.annotation.*;
 import org.nervousync.beans.core.BeanObject;
 import org.nervousync.commons.Globals;
-import org.nervousync.database.beans.configs.table.TableConfig;
 import org.nervousync.database.commons.DatabaseUtils;
-import org.nervousync.utils.CollectionUtils;
-import org.nervousync.utils.ObjectUtils;
-import org.nervousync.utils.StringUtils;
 
 import java.io.Serial;
 import java.lang.reflect.Field;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <h2 class="en-US">Column information</h2>
@@ -56,10 +47,7 @@ public final class ColumnInfo extends BeanObject {
      */
 	@Serial
     private static final long serialVersionUID = -2535643284257171857L;
-    private static final List<Class<?>> NUMBER_CLASS_LIST =
-            Arrays.asList(Short.class, short.class, Integer.class, int.class, Long.class, long.class,
-                    Float.class, float.class, Double.class, double.class);
-    private static final List<Integer> DATETIME_JDBC_TYPES = Arrays.asList(Types.TIMESTAMP, Types.DATE, Types.TIME);
+
     /**
      * <span class="en-US">Column name</span>
      * <span class="zh-CN">列名</span>
@@ -131,6 +119,7 @@ public final class ColumnInfo extends BeanObject {
      */
     private ColumnInfo(final String columnName, final int jdbcType, final boolean nullable,
                        final int length, final int precision, final int scale, final Object defaultValue) {
+        this();
         this.columnName = columnName;
         this.jdbcType = jdbcType;
         this.nullable = nullable;
@@ -138,93 +127,6 @@ public final class ColumnInfo extends BeanObject {
         this.precision = precision;
         this.scale = scale;
         this.defaultValue = defaultValue;
-    }
-
-    /**
-     * <h4 class="en-US">Generate column information instance by given result set</h4>
-     * <h4 class="zh-CN">根据给定的查询结果集生成列基本信息实例对象</h4>
-     *
-     * @param tableConfig <span class="en-US">Table configure information instance</span>
-     *                    <span class="zh-CN">数据表配置信息实例对象</span>
-     * @param resultSet   <span class="en-US">result set instance</span>
-     *                    <span class="zh-CN">查询结果集实例对象</span>
-     * @return <span class="en-US">Column information</span>
-     * <span class="zh-CN">列基本信息</span>
-     * @throws SQLException <span class="en-US">If an error occurs when parse result set instance</span>
-     *                      <span class="zh-CN">如果解析查询结果集时出现异常</span>
-     */
-    public static ColumnInfo newInstance(final TableConfig tableConfig, final ResultSet resultSet) throws SQLException {
-        if (resultSet == null) {
-            throw new SQLException("ResultSet is null");
-        }
-        String columnName = resultSet.getString("COLUMN_NAME");
-        int jdbcType = resultSet.getInt("DATA_TYPE");
-        boolean nullable = ObjectUtils.nullSafeEquals("YES", resultSet.getString("IS_NULLABLE"));
-        int length, precision, scale;
-        switch (jdbcType) {
-            case Types.CHAR:
-            case Types.NCHAR:
-            case Types.VARCHAR:
-            case Types.NVARCHAR:
-                length = resultSet.getInt("COLUMN_SIZE");
-                precision = Globals.DEFAULT_VALUE_INT;
-                scale = Globals.DEFAULT_VALUE_INT;
-                break;
-            case Types.DECIMAL:
-            case Types.FLOAT:
-            case Types.NUMERIC:
-            case Types.DOUBLE:
-                length = Globals.DEFAULT_VALUE_INT;
-                precision = resultSet.getInt("COLUMN_SIZE");
-                scale = resultSet.getInt("DECIMAL_DIGITS");
-                break;
-            default:
-                length = Globals.DEFAULT_VALUE_INT;
-                precision = Globals.DEFAULT_VALUE_INT;
-                scale = Globals.DEFAULT_VALUE_INT;
-                break;
-        }
-
-        ColumnConfig columnConfig = tableConfig.columnConfig(columnName);
-        if (columnConfig == null) {
-            return null;
-        }
-
-        Object defaultValue;
-        Class<?> fieldType = columnConfig.getFieldType();
-        if (Boolean.class.equals(fieldType)) {
-            Object objValue = resultSet.getObject("COLUMN_DEF");
-            defaultValue = (objValue == null) ? null : Boolean.valueOf(objValue.toString());
-        } else if (boolean.class.equals(fieldType)) {
-            defaultValue = resultSet.getBoolean("COLUMN_DEF");
-        } else if (Byte.class.equals(fieldType) || byte.class.equals(fieldType)) {
-            defaultValue = resultSet.getByte("COLUMN_DEF");
-        } else if (CollectionUtils.contains(DATETIME_JDBC_TYPES, columnConfig.getColumnInfo().getJdbcType())) {
-            defaultValue = new Date(resultSet.getTimestamp("COLUMN_DEF").getTime());
-        } else if (Short.class.equals(fieldType)) {
-            defaultValue = resultSet.getShort("COLUMN_DEF");
-        } else if (short.class.equals(fieldType)) {
-            defaultValue = resultSet.getShort("COLUMN_DEF");
-        } else {
-            Object object = resultSet.getObject("COLUMN_DEF");
-            if (CollectionUtils.contains(NUMBER_CLASS_LIST, fieldType) && (object instanceof String)) {
-                String objValue = parseValue((String) object);
-                if (Integer.class.equals(fieldType) || int.class.equals(fieldType)) {
-                    defaultValue = Integer.parseInt(objValue);
-                } else if (Long.class.equals(fieldType) || long.class.equals(fieldType)) {
-                    defaultValue = Long.parseLong(objValue);
-                } else if (Float.class.equals(fieldType) || float.class.equals(fieldType)) {
-                    defaultValue = Float.parseFloat(objValue);
-                } else if (Double.class.equals(fieldType) || double.class.equals(fieldType)) {
-                    defaultValue = Double.parseDouble(objValue);
-                } else {
-                    defaultValue = resultSet.getObject("COLUMN_DEF");
-                }
-            } else {
-                defaultValue = resultSet.getObject("COLUMN_DEF");
-            }
-        }
-        return new ColumnInfo(columnName, jdbcType, nullable, length, precision, scale, defaultValue);
     }
 
     /**
@@ -269,24 +171,6 @@ public final class ColumnInfo extends BeanObject {
         return new ColumnInfo(columnName, jdbcType,
                 (field.isAnnotationPresent(Id.class) ? Boolean.FALSE : column.nullable()),
                 length, precision, scale, defaultValue);
-    }
-
-    /**
-     * <h4 class="en-US">Check the given column information was modified</h4>
-     * <h4 class="zh-CN">检查给定的列基本信息是否更改</h4>
-     *
-     * @param columnInfo <span class="en-US">Target column information</span>
-     *                   <span class="zh-CN">目标列基本信息</span>
-     * @return <span class="en-US">Check result</span>
-     * <span class="zh-CN">检查结果</span>
-     */
-    public boolean modified(@Nonnull final ColumnInfo columnInfo) {
-        return !ObjectUtils.nullSafeEquals(this.jdbcType, columnInfo.getJdbcType())
-                || !ObjectUtils.nullSafeEquals(this.nullable, columnInfo.isNullable())
-                || !ObjectUtils.nullSafeEquals(this.length, columnInfo.getLength())
-                || !ObjectUtils.nullSafeEquals(this.precision, columnInfo.getPrecision())
-                || !ObjectUtils.nullSafeEquals(this.scale, columnInfo.getScale())
-                || !ObjectUtils.nullSafeEquals(this.defaultValue, columnInfo.getDefaultValue());
     }
 
     /**
@@ -364,29 +248,5 @@ public final class ColumnInfo extends BeanObject {
      */
     public Object getDefaultValue() {
         return defaultValue;
-    }
-
-    /**
-     * <h4 class="en-US">Parse the default value data read in the ResultSet</h4>
-     * <h4 class="zh-CN">解析ResultSet中读取的默认值数据</h4>
-     *
-     * @param objValue <span class="en-US">Default value from result set</span>
-     *                    <span class="zh-CN">读取的默认值</span>
-     * @return <span class="en-US">Parse and converted default value</span>
-     * <span class="zh-CN">解析后的默认值</span>
-     */
-    private static String parseValue(final String objValue) {
-        String parsedValue = objValue;
-        if (parsedValue.contains("::")) {
-            parsedValue = parsedValue.substring(0, parsedValue.indexOf("::"));
-            parsedValue = StringUtils.replace(parsedValue, "'", "");
-        }
-        if (parsedValue.startsWith("((")) {
-            parsedValue = parsedValue.substring(2);
-        }
-        if (parsedValue.endsWith("))")) {
-            parsedValue = parsedValue.substring(0, parsedValue.length() - 2);
-        }
-        return parsedValue;
     }
 }

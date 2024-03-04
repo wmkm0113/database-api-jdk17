@@ -63,6 +63,7 @@ public final class ArrayData extends BeanObject {
      *                    <span class="zh-CN">数组值</span>
      */
     public ArrayData(final Object[] arrayObject) {
+        this();
         this.arrayObject = arrayObject;
     }
 

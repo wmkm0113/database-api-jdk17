@@ -37,17 +37,6 @@ public interface TaskProvider {
     void initialize();
 
     /**
-     * <h4 class="en-US">Read adapter name</h4>
-     * <h4 class="zh-CN">读取适配器名称</h4>
-     *
-     * @param languageCode <span class="en-US">Language code</span>
-     *                     <span class="zh-CN">语言代码</span>
-     * @return <span class="en-US">Adapter name</span>
-     * <span class="zh-CN">适配器名称</span>
-     */
-    String name(final String languageCode);
-
-    /**
      * <h4 class="en-US">Destroy the current adapter</h4>
      * <h4 class="zh-CN">销毁当前适配器</h4>
      */
